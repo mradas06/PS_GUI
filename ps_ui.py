@@ -8,27 +8,27 @@ from time import sleep
 class Powersply_Simulation():
     def __init__(self, name):
         self.name = name
-        self.ampere_min = 0.
-        self.ampere_max = 100.
+        self.current_min = 0.
+        self.current_max = 100.
         self.voltage_min = 0.
         self.voltage_max = 100.
 
-    def set_Ampere(self, min: float, max: float):
-        self.ampere_min = min
-        self.ampere_max = max
+    def set_current(self, min: float, max: float):
+        self.current_min = min
+        self.current_max = max
 
     def set_Voltage(self, min: float, max: float):
         self.voltage_min = min
         self.voltage_max = max
 
-    def get_Ampere(self):
-        return self.ampere_min, self.ampere_max
+    def get_current(self):
+        return self.current_min, self.current_max
 
     def get_Voltage(self):
         return self.voltage_min, self.voltage_max
 
-    def output_Ampere(self):
-        return random.uniform(self.ampere_min, self.ampere_max)
+    def output_current(self):
+        return random.uniform(self.current_min, self.current_max)
 
     def output_Voltage(self):
         return random.uniform(self.voltage_min, self.voltage_max)
@@ -49,9 +49,9 @@ class PS_UI(QMainWindow):
     def init_Buttons(self):
         self.pushButton_CH1_Set.clicked.connect(
             lambda: [ 
-                self.powersply_Object.set_Ampere(
-                    self.doubleSpinBox_CH1_Ampere_Min.value(),
-                    self.doubleSpinBox_CH1_Ampere_Max.value()
+                self.powersply_Object.set_current(
+                    self.doubleSpinBox_CH1_current_Min.value(),
+                    self.doubleSpinBox_CH1_current_Max.value()
                 ),
                 self.powersply_Object.set_Voltage(
                     self.doubleSpinBox_CH1_Voltage_Min.value(),
@@ -73,10 +73,10 @@ class PS_UI(QMainWindow):
         )
 
     def init_Others(self):
-        self.doubleSpinBox_CH1_Ampere_Min.valueChanged.connect(
+        self.doubleSpinBox_CH1_current_Min.valueChanged.connect(
             lambda: self.pushButton_CH1_Set_Event(False)
         )
-        self.doubleSpinBox_CH1_Ampere_Max.valueChanged.connect(
+        self.doubleSpinBox_CH1_current_Max.valueChanged.connect(
             lambda: self.pushButton_CH1_Set_Event(False)
         )
         self.doubleSpinBox_CH1_Voltage_Min.valueChanged.connect(
@@ -111,8 +111,8 @@ class PS_UI(QMainWindow):
 
     def read_All_Output(self):
         if hasattr(self, "powersply_Object"):
-            self.label_CH1_Ampere_Output_Result.setText(
-                    str(self.powersply_Object.output_Ampere())
+            self.label_CH1_current_Output_Result.setText(
+                    str(self.powersply_Object.output_current())
             )
             self.label_CH1_Voltage_Output_Result.setText(
                 str(self.powersply_Object.output_Voltage())
@@ -123,9 +123,9 @@ class PS_UI(QMainWindow):
             sleep(delay)
     def read_All_Settings(self):
         if hasattr(self, "powersply_Object"):
-            ampere_min, ampere_max = self.powersply_Object.get_Ampere()
-            self.doubleSpinBox_CH1_Ampere_Min.setValue(ampere_min)
-            self.doubleSpinBox_CH1_Ampere_Max.setValue(ampere_max)
+            current_min, current_max = self.powersply_Object.get_current()
+            self.doubleSpinBox_CH1_current_Min.setValue(current_min)
+            self.doubleSpinBox_CH1_current_Max.setValue(current_max)
 
             voltage_min, voltage_max = self.powersply_Object.get_Voltage()
             self.doubleSpinBox_CH1_Voltage_Min.setValue(voltage_min)
