@@ -8,30 +8,30 @@ from time import sleep
 class Powersply_Simulation():
     def __init__(self, name):
         self.name = name
-        self.current_min = 0.
-        self.current_max = 100.
-        self.voltage_min = 0.
-        self.voltage_max = 100.
+        self.Current_min = 0.
+        self.Current_max = 100.
+        self.Voltage_min = 0.
+        self.Voltage_max = 100.
 
-    def set_current(self, min: float, max: float):
-        self.current_min = min
-        self.current_max = max
+    def set_Current(self, min: float, max: float):
+        self.Current_min = min
+        self.Current_max = max
 
     def set_Voltage(self, min: float, max: float):
-        self.voltage_min = min
-        self.voltage_max = max
+        self.Voltage_min = min
+        self.Voltage_max = max
 
-    def get_current(self):
-        return self.current_min, self.current_max
+    def get_Current(self):
+        return self.Current_min, self.Current_max
 
     def get_Voltage(self):
-        return self.voltage_min, self.voltage_max
+        return self.Voltage_min, self.Voltage_max
 
-    def output_current(self):
-        return random.uniform(self.current_min, self.current_max)
+    def output_Current(self):
+        return random.uniform(self.Current_min, self.Current_max)
 
     def output_Voltage(self):
-        return random.uniform(self.voltage_min, self.voltage_max)
+        return random.uniform(self.Voltage_min, self.Voltage_max)
 
 class PS_UI(QMainWindow):
     def __init__(self, *args, ui_path, obj=None, **kwargs):
@@ -45,13 +45,15 @@ class PS_UI(QMainWindow):
         self.init_Buttons()
         self.init_Others()
         self.init_Timers()
+        self.init_Checkbox()
+
 
     def init_Buttons(self):
         self.pushButton_CH1_Set.clicked.connect(
             lambda: [ 
-                self.powersply_Object.set_current(
-                    self.doubleSpinBox_CH1_current_Min.value(),
-                    self.doubleSpinBox_CH1_current_Max.value()
+                self.powersply_Object.set_Current(
+                    self.doubleSpinBox_CH1_Current_Min.value(),
+                    self.doubleSpinBox_CH1_Current_Max.value()
                 ),
                 self.powersply_Object.set_Voltage(
                     self.doubleSpinBox_CH1_Voltage_Min.value(),
@@ -75,9 +77,9 @@ class PS_UI(QMainWindow):
 
         self.pushButton_CH2_Set.clicked.connect(
             lambda: [
-                self.powersply_Object.set_current(
-                    self.doubleSpinBox_CH2_current_Min.value(),
-                    self.doubleSpinBox_CH2_current_Max.value()
+                self.powersply_Object.set_Current(
+                    self.doubleSpinBox_CH2_Current_Min.value(),
+                    self.doubleSpinBox_CH2_Current_Max.value()
 
                 ),
                 self.powersply_Object.set_Voltage(
@@ -95,9 +97,9 @@ class PS_UI(QMainWindow):
 
         self.pushButton_CH3_Set.clicked.connect(
             lambda: [
-                self.powersply_Object.set_current(
-                    self.doubleSpinBox_CH3_current_Min.value(),
-                    self.doubleSpinBox_CH3_current_Max.value()
+                self.powersply_Object.set_Current(
+                    self.doubleSpinBox_CH3_Current_Min.value(),
+                    self.doubleSpinBox_CH3_Current_Max.value()
 
                 ),
                 self.powersply_Object.set_Voltage(
@@ -115,9 +117,9 @@ class PS_UI(QMainWindow):
 
         self.pushButton_CH4_Set.clicked.connect(
             lambda: [
-                self.powersply_Object.set_current(
-                    self.doubleSpinBox_CH4_current_Min.value(),
-                    self.doubleSpinBox_CH4_current_Max.value()
+                self.powersply_Object.set_Current(
+                    self.doubleSpinBox_CH4_Current_Min.value(),
+                    self.doubleSpinBox_CH4_Current_Max.value()
 
                 ),
                 self.powersply_Object.set_Voltage(
@@ -206,13 +208,13 @@ class PS_UI(QMainWindow):
         self.checkBox_CH4_OFF.stateChanged.connect(self.uncheck)
         
 
-
+    
     def init_Others(self):
         #CH1
-        self.doubleSpinBox_CH1_current_Min.valueChanged.connect(
+        self.doubleSpinBox_CH1_Current_Min.valueChanged.connect(
             lambda: self.pushButton_CH1_Set_Event(False)
         )
-        self.doubleSpinBox_CH1_current_Max.valueChanged.connect(
+        self.doubleSpinBox_CH1_Current_Max.valueChanged.connect(
             lambda: self.pushButton_CH1_Set_Event(False)
         )
         self.doubleSpinBox_CH1_Voltage_Min.valueChanged.connect(
@@ -222,10 +224,10 @@ class PS_UI(QMainWindow):
             lambda: self.pushButton_CH1_Set_Event(False)
         )
         #CH2
-        self.doubleSpinBox_CH2_current_Min.valueChanged.connect(
+        self.doubleSpinBox_CH2_Current_Min.valueChanged.connect(
             lambda: self.pushButton_CH2_Set_Event(False)
         )
-        self.doubleSpinBox_CH2_current_Max.valueChanged.connect(
+        self.doubleSpinBox_CH2_Current_Max.valueChanged.connect(
             lambda: self.pushButton_CH2_Set_Event(False)
         )
         self.doubleSpinBox_CH2_Voltage_Min.valueChanged.connect(
@@ -235,10 +237,10 @@ class PS_UI(QMainWindow):
             lambda: self.pushButton_CH2_Set_Event(False)
         )
         #CH3
-        self.doubleSpinBox_CH3_current_Min.valueChanged.connect(
+        self.doubleSpinBox_CH3_Current_Min.valueChanged.connect(
             lambda: self.pushButton_CH3_Set_Event(False)
         )
-        self.doubleSpinBox_CH3_current_Max.valueChanged.connect(
+        self.doubleSpinBox_CH3_Current_Max.valueChanged.connect(
             lambda: self.pushButton_CH3_Set_Event(False)
         )
         self.doubleSpinBox_CH3_Voltage_Min.valueChanged.connect(
@@ -248,10 +250,10 @@ class PS_UI(QMainWindow):
             lambda: self.pushButton_CH3_Set_Event(False)
         )
         #CH4
-        self.doubleSpinBox_CH4_current_Min.valueChanged.connect(
+        self.doubleSpinBox_CH4_Current_Min.valueChanged.connect(
             lambda: self.pushButton_CH4_Set_Event(False)
         )
-        self.doubleSpinBox_CH4_current_Max.valueChanged.connect(
+        self.doubleSpinBox_CH4_Current_Max.valueChanged.connect(
             lambda: self.pushButton_CH4_Set_Event(False)
         )
         self.doubleSpinBox_CH4_Voltage_Min.valueChanged.connect(
@@ -294,64 +296,60 @@ class PS_UI(QMainWindow):
 
     def read_All_Output(self):
         if hasattr(self, "powersply_Object"):
-            self.label_CH1_current_Output_Result.setText(
-                    str(self.powersply_Object.output_current())
+            self.label_CH1_Current_Output_Result.setText(
+                    str(self.powersply_Object.output_Current())
             )
             self.label_CH1_Voltage_Output_Result.setText(
                 str(self.powersply_Object.output_Voltage())
             )
         else:
             print("CH1 Reading Output ERROR")
-            delay = 1
-            sleep(delay)
+            
 
         if hasattr(self, "powersply_Object"):
-            self.label_CH2_current_Output_Result.setText(
-                    str(self.powersply_Object.output_current())
+            self.label_CH2_Current_Output_Result.setText(
+                    str(self.powersply_Object.output_Current())
             )
             self.label_CH2_Voltage_Output_Result.setText(
                 str(self.powersply_Object.output_Voltage())
             )
         else:
             print("CH2 Reading Output ERROR")
-            delay = 1
-            sleep(delay)
+            
 
         if hasattr(self, "powersply_Object"):
-            self.label_CH3_current_Output_Result.setText(
-                    str(self.powersply_Object.output_current())
+            self.label_CH3_Current_Output_Result.setText(
+                    str(self.powersply_Object.output_Current())
             )
             self.label_CH3_Voltage_Output_Result.setText(
                 str(self.powersply_Object.output_Voltage())
             )
         else:
             print("CH3 Reading Output ERROR")
-            delay = 1
-            sleep(delay)
+            
 
 
         if hasattr(self, "powersply_Object"):
-            self.label_CH4_current_Output_Result.setText(
-                    str(self.powersply_Object.output_current())
+            self.label_CH4_Current_Output_Result.setText(
+                    str(self.powersply_Object.output_Current())
             )
             self.label_CH4_Voltage_Output_Result.setText(
                 str(self.powersply_Object.output_Voltage())
             )
         else:
             print("CH4 Reading Output ERROR")
-            delay = 1
-            sleep(delay)
+            
 
     def read_All_Settings(self):
         #CH1
         if hasattr(self, "powersply_Object"):
-            current_min, current_max = self.powersply_Object.get_current()
-            self.doubleSpinBox_CH1_current_Min.setValue(current_min)
-            self.doubleSpinBox_CH1_current_Max.setValue(current_max)
+            Current_min, Current_max = self.powersply_Object.get_Current()
+            self.doubleSpinBox_CH1_Current_Min.setValue(Current_min)
+            self.doubleSpinBox_CH1_Current_Max.setValue(Current_max)
 
-            voltage_min, voltage_max = self.powersply_Object.get_Voltage()
-            self.doubleSpinBox_CH1_Voltage_Min.setValue(voltage_min)
-            self.doubleSpinBox_CH1_Voltage_Max.setValue(voltage_max)
+            Voltage_min, Voltage_max = self.powersply_Object.get_Voltage()
+            self.doubleSpinBox_CH1_Voltage_Min.setValue(Voltage_min)
+            self.doubleSpinBox_CH1_Voltage_Max.setValue(Voltage_max)
 
             self.pushButton_CH1_Set_Event(True)
         else:
@@ -359,13 +357,13 @@ class PS_UI(QMainWindow):
 
         #CH2
         if hasattr(self, "powersply_Object"):
-            current_min, current_max = self.powersply_Object.get_current()#is this duplicate?
-            self.doubleSpinBox_CH2_current_Min.setValue(current_min)
-            self.doubleSpinBox_CH2_current_Max.setValue(current_max)
+            Current_min, Current_max = self.powersply_Object.get_Current()#is this duplicate?
+            self.doubleSpinBox_CH2_Current_Min.setValue(Current_min)
+            self.doubleSpinBox_CH2_Current_Max.setValue(Current_max)
 
-            voltage_min, voltage_max = self.powersply_Object.get_Voltage()
-            self.doubleSpinBox_CH2_Voltage_Min.setValue(voltage_min)
-            self.doubleSpinBox_CH2_Voltage_Max.setValue(voltage_max)
+            Voltage_min, Voltage_max = self.powersply_Object.get_Voltage()
+            self.doubleSpinBox_CH2_Voltage_Min.setValue(Voltage_min)
+            self.doubleSpinBox_CH2_Voltage_Max.setValue(Voltage_max)
 
             self.pushButton_CH2_Set_Event(True)
         else:
@@ -373,13 +371,13 @@ class PS_UI(QMainWindow):
 
         #CH3
         if hasattr(self, "powersply_Object"):
-            current_min, current_max = self.powersply_Object.get_current()
-            self.doubleSpinBox_CH3_current_Min.setValue(current_min)
-            self.doubleSpinBox_CH3_current_Max.setValue(current_max)
+            Current_min, Current_max = self.powersply_Object.get_Current()
+            self.doubleSpinBox_CH3_Current_Min.setValue(Current_min)
+            self.doubleSpinBox_CH3_Current_Max.setValue(Current_max)
 
-            voltage_min, voltage_max = self.powersply_Object.get_Voltage()
-            self.doubleSpinBox_CH3_Voltage_Min.setValue(voltage_min)
-            self.doubleSpinBox_CH3_Voltage_Max.setValue(voltage_max)
+            Voltage_min, Voltage_max = self.powersply_Object.get_Voltage()
+            self.doubleSpinBox_CH3_Voltage_Min.setValue(Voltage_min)
+            self.doubleSpinBox_CH3_Voltage_Max.setValue(Voltage_max)
 
             self.pushButton_CH3_Set_Event(True)
         else:
@@ -387,13 +385,13 @@ class PS_UI(QMainWindow):
 
         #CH4
         if hasattr(self, "powersply_Object"):
-            current_min, current_max = self.powersply_Object.get_current()
-            self.doubleSpinBox_CH4_current_Min.setValue(current_min)
-            self.doubleSpinBox_CH4_current_Max.setValue(current_max)
+            Current_min, Current_max = self.powersply_Object.get_Current()
+            self.doubleSpinBox_CH4_Current_Min.setValue(Current_min)
+            self.doubleSpinBox_CH4_Current_Max.setValue(Current_max)
 
-            voltage_min, voltage_max = self.powersply_Object.get_Voltage()
-            self.doubleSpinBox_CH4_Voltage_Min.setValue(voltage_min)
-            self.doubleSpinBox_CH4_Voltage_Max.setValue(voltage_max)
+            Voltage_min, Voltage_max = self.powersply_Object.get_Voltage()
+            self.doubleSpinBox_CH4_Voltage_Min.setValue(Voltage_min)
+            self.doubleSpinBox_CH4_Voltage_Max.setValue(Voltage_max)
 
             self.pushButton_CH4_Set_Event(True)
         else:
