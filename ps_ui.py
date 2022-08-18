@@ -170,12 +170,18 @@ class PS_UI(QMainWindow):
         self.widget_Historical_Graph_CH1.setBackground("w")
 
     def add_log(self, channel, voltage, current):
-        if len(self.log_structure[channel]["time"]) > 0:
-            self.log_structure[channel]["time"].append(self.log_structure[channel]["time"][-1] - round(time(), 2))
-        else:
-            self.log_structure[channel]["time"].append(
-                round(time(), 2)
-            )
+        # if len(self.log_structure[channel]["time"]) > 0:
+        #     self.log_structure[channel]["time"].append(
+        #         self.log_structure[channel]["time"][-1] - round(time(), 2)
+        #     )
+        #     # print("self.log_structure", self.log_structure[channel]["time"])
+        # else:
+        #     self.log_structure[channel]["time"].append(
+        #         round(time(), 2)
+        #     )
+        self.log_structure[channel]["time"].append(
+            round(time(), 5)
+        )
 
         self.log_structure[channel]["voltage"].append(voltage)
         self.log_structure[channel]["current"].append(current)
